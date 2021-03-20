@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Grid,
   TextField,
@@ -6,7 +6,7 @@ import {
   InputLabel,
   MenuItem,
 } from "@material-ui/core";
-import { useNotification, useGlobal } from "../hooks";
+import { useNotification, useGlobal, useForm } from "../hooks";
 import { taskServices } from "../api";
 
 import ModalForm from "../components/ModalForm";
@@ -17,10 +17,11 @@ const initTarea = {
 };
 
 const EditCard = ({ isOpen, handleClose, tareaEdit, setTareas }) => {
-  const [tarea, setTarea] = useState(initTarea);
   const [glbState] = useGlobal();
   const alert = useNotification();
   const statuses = glbState.taskStatuses;
+
+  const [tarea, setTarea, handleInputChange, reset] = useForm(initTarea);
 
   useEffect(() => {
     if (tareaEdit) {
@@ -28,17 +29,10 @@ const EditCard = ({ isOpen, handleClose, tareaEdit, setTareas }) => {
     }
   }, [tareaEdit]);
 
-  const handleInputChange = ({ target }) => {
-    setTarea({
-      ...tarea,
-      [target.name]: target.value,
-    });
-  };
-
   const showMessage = () => {
     alert({
       isOpen: true,
-      message: "Card was added succesfully.",
+      message: "Card has been updated succesfully.",
       severity: "success",
     });
   };

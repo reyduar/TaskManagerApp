@@ -16,16 +16,17 @@ import AlertMessage from "../components/AlertMessage";
 import AlertDialog from "../components/AlertDialog";
 import { taskServices } from "../api";
 import EditCard from "./EditCard";
+import { useNotification, useForm } from "../hooks";
 
 const CardItem = ({ tarea, setTareas, tareas }) => {
   const [tareId, setTareaId] = useState("");
   const [glbState] = useContext(GlobalContext);
   const statuses = glbState.taskStatuses;
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selected, setSelected] = useState(null);
   const classes = useStyles();
+  const alert = useNotification();
 
   const handleOpenDeleteDialog = (id) => {
     setOpenConfirm(true);
@@ -39,7 +40,11 @@ const CardItem = ({ tarea, setTareas, tareas }) => {
   const borrarTarea = () => {
     taskServices.remove(tareId).then(
       (data) => {
-        // setShowMessage(true);
+        alert({
+          isOpen: true,
+          message: "Card has been deleted succesfully.",
+          severity: "success",
+        });
         setTareas(tareas.filter((item) => item.id !== tareId));
         handleClose();
       },
@@ -116,12 +121,6 @@ const CardItem = ({ tarea, setTareas, tareas }) => {
         handleYes={handleDelete}
         title={"Delete Task"}
         content={"Are you sure you want to delete?"}
-      />
-      <AlertMessage
-        severity={"success"}
-        isOpen={showMessage}
-        message={"Task has been deleted successfully!"}
-        handleClose={() => setShowMessage(false)}
       />
     </>
   );
