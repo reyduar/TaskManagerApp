@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.warning.light,
     },
   },
+  linkbar: {
+    flexGrow: 1,
+  },
 }));
 
 export default useStyles;

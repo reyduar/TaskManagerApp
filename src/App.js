@@ -1,9 +1,8 @@
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Home from "./pages/Home";
-import Header from "./components/Header";
 import { NotificationProvider } from "./contexts";
+import AppRouter from "./router/AppRouter";
 
 function App() {
   const theme = createMuiTheme({
@@ -21,8 +20,7 @@ function App() {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <NotificationProvider>
-          <Header />
-          <Home />
+          <AppRouter />
         </NotificationProvider>
       </ThemeProvider>
     </>
