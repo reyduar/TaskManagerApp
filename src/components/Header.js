@@ -15,7 +15,7 @@ function Header() {
       <Toolbar>
         <ViewListIcon className={icon} />
         <Typography variant="h6" color="inherit" noWrap>
-          Tasks Manager
+          Task Manager
         </Typography>
         <Tab label="Home" to="/" component={Link} />
         <Tab label="Register" to="/register" component={Link} />

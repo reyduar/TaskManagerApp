@@ -32,7 +32,7 @@ function Home() {
   return (
     <main>
       <div className={classes.heroContent}>
-        <Container maxWidth="sm">
+        <Container maxWidth="lg">
           <Typography
             component="h1"
             variant="h2"
@@ -40,7 +40,7 @@ function Home() {
             color="textPrimary"
             gutterBottom
           >
-            Tasks Manager App
+            Task Manager
           </Typography>
           <Typography
             variant="h5"
