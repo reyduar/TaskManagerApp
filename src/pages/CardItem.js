@@ -12,7 +12,6 @@ import {
 import DoneIcon from "@material-ui/icons/Done";
 import { GlobalContext } from "../store";
 import useStyles from "../UITemplate";
-import AlertMessage from "../components/AlertMessage";
 import AlertDialog from "../components/AlertDialog";
 import { taskServices } from "../api";
 import EditCard from "./EditCard";

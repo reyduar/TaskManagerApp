@@ -1,22 +1,27 @@
 import { firebase } from "./firebase";
 
 const db = firebase.firestore();
-const collectionName = "tareas";
+const taskCollection = "tareas";
+const userCollection = "users";
 
 function findAll() {
-  return db.collection(collectionName).get();
+  return db.collection(taskCollection).get();
 }
 
 function save(tarea) {
-  return db.collection(collectionName).add(tarea);
+  return db.collection(taskCollection).add(tarea);
 }
 
 function edit(tarea) {
-  return db.collection(collectionName).doc(tarea.id).update(tarea);
+  return db.collection(taskCollection).doc(tarea.id).update(tarea);
 }
 
 function remove(id) {
-  return db.collection(collectionName).doc(id).delete();
+  return db.collection(taskCollection).doc(id).delete();
+}
+
+function saveUser(newUser) {
+  return db.collection(userCollection).add(newUser);
 }
 
 export const taskServices = {
@@ -24,4 +29,8 @@ export const taskServices = {
   save,
   edit,
   remove,
+};
+
+export const userServices = {
+  saveUser,
 };

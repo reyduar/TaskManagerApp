@@ -6,11 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import Store from "./store";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Store>
-      <App />
-    </Store>
-  </React.StrictMode>,
+  <Store>
+    <App />
+  </Store>,
   document.getElementById("root")
 );
 
