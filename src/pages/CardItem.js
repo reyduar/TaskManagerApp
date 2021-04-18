@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
-import { GlobalContext } from "../store";
+import { GlobalContext } from "../contexts";
 import useStyles from "../UITemplate";
 import AlertDialog from "../components/AlertDialog";
 import { taskServices } from "../api";

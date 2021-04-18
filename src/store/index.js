@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { UserContext, GlobalContext } from "../contexts";
 
 const INITIAL_GLOBAL_STATE = {
   taskStatuses: [
@@ -8,14 +9,15 @@ const INITIAL_GLOBAL_STATE = {
   ],
 };
 
-export const GlobalContext = React.createContext(INITIAL_GLOBAL_STATE);
-
 const Store = ({ children }) => {
   const [glbState, setGlbState] = useState(INITIAL_GLOBAL_STATE);
+  const [user, setUser] = useState({});
 
   return (
     <GlobalContext.Provider value={[glbState, setGlbState]}>
-      {children}
+      <UserContext.Provider value={{ user, setUser }}>
+        {children}
+      </UserContext.Provider>
     </GlobalContext.Provider>
   );
 };
