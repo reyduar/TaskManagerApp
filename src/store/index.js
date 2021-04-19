@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { UserContext, GlobalContext } from "../contexts";
+import React, { useState, useReducer, useEffect } from "react";
+import { authReducer } from "../auth/authReducer";
+import { UserContext, GlobalContext, AuthContext } from "../contexts";
 
 const INITIAL_GLOBAL_STATE = {
   taskStatuses: [
@@ -9,16 +10,24 @@ const INITIAL_GLOBAL_STATE = {
   ],
 };
 
+const initReducer = () => {
+  return JSON.parse(localStorage.getItem("userTaskApp")) || { logged: false };
+};
+
 const Store = ({ children }) => {
   const [glbState, setGlbState] = useState(INITIAL_GLOBAL_STATE);
-  const [user, setUser] = useState({});
+  const [user, dispatch] = useReducer(authReducer, {}, initReducer);
+
+  useEffect(() => {
+    localStorage.setItem("userTaskApp", JSON.stringify(user));
+  }, [user]);
 
   return (
-    <GlobalContext.Provider value={[glbState, setGlbState]}>
-      <UserContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, dispatch }}>
+      <GlobalContext.Provider value={[glbState, setGlbState]}>
         {children}
-      </UserContext.Provider>
-    </GlobalContext.Provider>
+      </GlobalContext.Provider>
+    </AuthContext.Provider>
   );
 };
 

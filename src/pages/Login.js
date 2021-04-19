@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,10 +15,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import { userServices } from "../api";
-import { useNotification, useUser } from "../hooks";
+import { useNotification, useAuth } from "../hooks";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
+import { type } from "../types/types";
 
 const formSchema = object().shape({
   emailAddress: string().required("Enter user email.").email("Invalid email"),
@@ -44,10 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = ({ history }) => {
   const classes = useStyles();
   const alert = useNotification();
-  const { setUser } = useUser();
+  const { dispatch } = useAuth();
 
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onBlur",
@@ -70,14 +72,27 @@ const Login = () => {
           });
         } else {
           query.forEach((doc) => {
+            // history.push("/"); // Permite ir al Login sin presionamos el boton Anterior del navegador
+
             const id = doc.id;
             const { emailAddress, firstName, lastName } = doc.data();
-            setUser({ id, emailAddress, firstName, lastName });
+            dispatch({
+              type: type.LOGIN,
+              payload: {
+                id,
+                emailAddress,
+                name: `${firstName} ${lastName}`,
+              },
+            });
             alert({
               isOpen: true,
               message: `Welcome ${firstName} ${lastName} :)`,
               severity: "success",
             });
+
+            history.replace("/"); // NO Permite ir al Login sin presionamos el boton Anterior del navegador
+
+            reset();
           });
         }
       },
@@ -89,8 +104,6 @@ const Login = () => {
         });
       }
     );
-
-    // reset();
   };
 
   return (
@@ -147,7 +160,7 @@ const Login = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/register" component={RouterLink} variant="body2">
                 {"Don't have an account? Sign up"}
               </Link>
             </Grid>

@@ -1,3 +1,3 @@
 export * from "./NotificationContext";
-export * from "./UserContext";
 export * from "./GlobalContext";
+export * from "./AuthContext";
