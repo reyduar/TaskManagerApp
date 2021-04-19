@@ -72,8 +72,6 @@ const Login = ({ history }) => {
           });
         } else {
           query.forEach((doc) => {
-            // history.push("/"); // Permite ir al Login sin presionamos el boton Anterior del navegador
-
             const id = doc.id;
             const { emailAddress, firstName, lastName } = doc.data();
             dispatch({
@@ -90,8 +88,7 @@ const Login = ({ history }) => {
               severity: "success",
             });
 
-            history.replace("/"); // NO Permite ir al Login sin presionamos el boton Anterior del navegador
-
+            history.replace("/");
             reset();
           });
         }
