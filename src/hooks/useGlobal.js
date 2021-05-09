@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GlobalContext } from "../store";
+import { GlobalContext } from "../contexts";
 
 /**
  *
