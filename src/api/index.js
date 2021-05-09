@@ -24,6 +24,14 @@ function saveUser(newUser) {
   return db.collection(userCollection).add(newUser);
 }
 
+function findUser({ emailAddress, password }) {
+  const userRef = db.collection(userCollection);
+  return userRef
+    .where("emailAddress", "==", emailAddress)
+    .where("password", "==", password)
+    .get();
+}
+
 export const taskServices = {
   findAll,
   save,
@@ -33,4 +41,5 @@ export const taskServices = {
 
 export const userServices = {
   saveUser,
+  findUser,
 };
