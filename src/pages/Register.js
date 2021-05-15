@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const alert = useNotification();
+  const history = useHistory();
   const { register, handleSubmit, errors, reset } = useForm({
     mode: "onBlur",
     resolver: yupResolver(formSchema),
@@ -76,6 +78,7 @@ const Register = () => {
           severity: "success",
         });
         reset();
+        history.replace("/login");
       },
       (error) => {
         alert({
