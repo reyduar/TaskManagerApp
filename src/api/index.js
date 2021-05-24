@@ -8,6 +8,19 @@ function findAll() {
   return db.collection(taskCollection).get();
 }
 
+function findByName(query) {
+  if (query) {
+    const taskRef = db.collection(taskCollection);
+    return taskRef
+      .orderBy("name")
+      .where("name", ">=", query)
+      .where("name", "<=", query + "\uf8ff")
+      .get();
+  } else {
+    return db.collection(taskCollection).get();
+  }
+}
+
 function save(tarea) {
   return db.collection(taskCollection).add(tarea);
 }
@@ -33,6 +46,7 @@ function findUser({ emailAddress, password }) {
 }
 
 export const taskServices = {
+  findByName,
   findAll,
   save,
   edit,
