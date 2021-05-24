@@ -4,6 +4,20 @@ const db = firebase.firestore();
 const taskCollection = "tareas";
 const userCollection = "users";
 
+function findByName(query) {
+  if (query) {
+    const taskRef = db.collection(taskCollection);
+    return taskRef
+      .orderBy("name")
+      .where("name", ">=", query)
+      .where("name", "<=", query + "\uf8ff")
+
+      .get();
+  } else {
+    return db.collection(taskCollection).get();
+  }
+}
+
 function findAll() {
   return db.collection(taskCollection).get();
 }
@@ -33,6 +47,7 @@ function findUser({ emailAddress, password }) {
 }
 
 export const taskServices = {
+  findByName,
   findAll,
   save,
   edit,

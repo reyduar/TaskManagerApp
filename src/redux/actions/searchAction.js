@@ -1,4 +1,23 @@
+import { taskServices } from "../../api";
 import { types } from "../../types/actionTypes";
+
+export function searchTasks(searchTerm) {
+  return (dispatch) => {
+    dispatch(fetchTasks(searchTerm));
+    taskServices.findByName(searchTerm).then(
+      (data) => {
+        const arrayData = data.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        dispatch(fetchTasksSuccess(arrayData));
+      },
+      (error) => {
+        dispatch(fetchTasksError(error));
+      }
+    );
+  };
+}
 
 export function fetchTasks(searchTerm) {
   return {

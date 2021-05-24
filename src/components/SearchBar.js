@@ -10,7 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import SearchIcon from "@material-ui/icons/Search";
 import BlockIcon from "@material-ui/icons/Block";
 
-import { fetchTasks } from "../redux/actions/";
+import { searchTasks } from "../redux/actions/";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -35,7 +35,7 @@ const SearchBar = () => {
   };
 
   const handleSearch = () => {
-    dispatch(fetchTasks(values.searchTerm));
+    dispatch(searchTasks(values.searchTerm));
   };
 
   const handleMouseDownSearch = (event) => {
@@ -45,6 +45,10 @@ const SearchBar = () => {
   useEffect(() => {
     setValues({ ...values, loading: _loading });
   }, [_loading]);
+
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   return (
     <Container maxWidth="md" justify="center">
