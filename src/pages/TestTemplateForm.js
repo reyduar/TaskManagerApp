@@ -91,19 +91,22 @@ const TestTemplateForm = () => {
               <Grid item xs={12} sm={6}>
                 <Controller
                   render={(props) => (
-                    <Select
+                    <TextField
+                      select
                       value={props.value}
                       onChange={props.onChange}
                       variant="outlined"
                       fullWidth
                       label="Status"
+                      error={!!errors.status}
+                      helperText={errors?.status?.message}
                     >
                       {statuses.map((item) => (
                         <MenuItem key={item.value} value={item.value}>
                           {item.name}
                         </MenuItem>
                       ))}
-                    </Select>
+                    </TextField>
                   )}
                   name="status"
                   control={control}
