@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
-import ViewListIcon from "@material-ui/icons/ViewList";
 import Typography from "@material-ui/core/Typography";
-import Tab from "@material-ui/core/Tab";
 import { useAuth } from "../hooks";
 import { type } from "../types/types";
 import Link from "@material-ui/core/Link";
