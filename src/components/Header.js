@@ -64,7 +64,7 @@ function Header() {
           noWrap
           className={classes.toolbarTitle}
         >
-          Task Manager{" "}
+          Test Case Manager{" "}
           {auth && (
             <small>{`User Logged: ${auth.firstName} ${auth.lastName}`}</small>
           )}
