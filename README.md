@@ -30,9 +30,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### Creamos una react app para conectar con el firestore
 
-- [🕵 Codigo Fuente del Proyecto](https://github.com/reyduar/React-Firebase-TasksApp)
-- [Videos Part 1 - Parte 2](https://gitlab.com/reya/videos-formacion/-/raw/master/Fase%203%20Part%201%20-%20React%20+%20Firebase.rar?inline=false)
-
 ```
 npx create-react-app crud-firestore
 cd crud-firestore
