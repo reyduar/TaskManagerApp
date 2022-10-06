@@ -17,6 +17,7 @@ Ariel Duarte
 - Material UI
 - Redux-thunk
 - Yup
+- React Hook Form
 - Lodash
 - Font-awesome
 
