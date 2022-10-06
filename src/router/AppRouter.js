@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import DashboardRouter from "./DashboardRouter";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+
 import { useAuth } from "../hooks";
 
 const AppRouter = () => {
@@ -23,6 +24,11 @@ const AppRouter = () => {
             exact
             path="/register"
             component={Register}
+            isAuthenticated={auth.logged}
+          />
+          <PrivateRoute
+            path="/testCase"
+            component={DashboardRouter}
             isAuthenticated={auth.logged}
           />
           <PrivateRoute

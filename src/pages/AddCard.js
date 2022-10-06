@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -27,10 +28,15 @@ const AddCard = ({ setTareas }) => {
   const [tarea, setTarea, handleInputChange, reset] = useForm(initTarea);
   const [glbState] = useGlobal();
   const statuses = glbState.taskStatuses;
+  const history = useHistory();
 
   const handleClose = () => {
     reset();
     setOpenModal(false);
+  };
+
+  const goToCreateTestCase = () => {
+    history.replace("/testCase");
   };
 
   const handleSubmit = () => {
@@ -72,10 +78,11 @@ const AddCard = ({ setTareas }) => {
               size="large"
               variant="contained"
               color="primary"
-              onClick={() => setOpenModal(!openModal)}
+              onClick={goToCreateTestCase}
+              // onClick={() => setOpenModal(!openModal)}
             >
               <Icon name={"Add"} />
-              Create new task
+              Create New Task
             </Button>
           </Grid>
         </Grid>
