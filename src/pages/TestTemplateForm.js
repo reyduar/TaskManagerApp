@@ -1,22 +1,15 @@
 import React, { useState } from "react";
 import "date-fns";
+import { last } from "lodash";
 import { Container, TableCell } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import AlertDialog from "../components/AlertDialog";
-import {
-  Grid,
-  Button,
-  TextField,
-  MenuItem,
-  Select,
-  Modal,
-} from "@material-ui/core";
+import { Grid, Button, TextField, MenuItem } from "@material-ui/core";
 import AddStepModal from "./AddStepModal";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import Icon from "../components/Icon";
-import { userServices } from "../api";
 import { useNotification, useGlobal } from "../hooks";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,7 +19,6 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
 import { TableContainer, TableHead, TableRow } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
@@ -57,9 +49,9 @@ const scopes = [
 
 const formSchema = object().shape({
   testCaseId: string().required("Test case Id is a required field."),
-  status: string().required("Status is a requited field."),
-  title: string().required("Title is a requited field."),
-  description: string().required("Description is a requited field."),
+  status: string().required("Status is a required field."),
+  title: string().required("Title is a required field."),
+  description: string().required("Description is a required field."),
 });
 
 const TestTemplateForm = () => {
@@ -326,28 +318,30 @@ const TestTemplateForm = () => {
                 />
               </Grid>
 
-              <AddStepModal setSteps={setSteps}></AddStepModal>
+              <AddStepModal setSteps={setSteps} steps={steps}></AddStepModal>
               <Grid item xs={12} sm={12}>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Step #</TableCell>
-                        <TableCell>Actions</TableCell>
-                        <TableCell>Required Data</TableCell>
-                        <TableCell>Expected Result</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    {steps.map((elemento) => (
-                      <TableRow>
-                        <TableCell>{elemento.stepId}</TableCell>
-                        <TableCell>{elemento.action}</TableCell>
-                        <TableCell>{elemento.requiredData}</TableCell>
-                        <TableCell>{elemento.expectedResult}</TableCell>
-                      </TableRow>
-                    ))}
-                  </Table>
-                </TableContainer>
+                {steps.length > 0 && (
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Step #</TableCell>
+                          <TableCell>Actions</TableCell>
+                          <TableCell>Required Data</TableCell>
+                          <TableCell>Expected Result</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      {steps.map((elemento) => (
+                        <TableRow key={elemento.stepNumber}>
+                          <TableCell>{elemento.stepNumber}</TableCell>
+                          <TableCell>{elemento.action}</TableCell>
+                          <TableCell>{elemento.requiredData}</TableCell>
+                          <TableCell>{elemento.expectedResult}</TableCell>
+                        </TableRow>
+                      ))}
+                    </Table>
+                  </TableContainer>
+                )}
               </Grid>
 
               <Grid item xs={12} sm={12}>

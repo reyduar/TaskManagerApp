@@ -78,11 +78,13 @@ function ModalForm({
   title,
   onSubmit,
   loading,
+  buttonLabel = "Save Changes",
 }) {
   const classes = useStyles();
 
   const onConfirm = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     onSubmit();
   };
   return (
@@ -100,7 +102,7 @@ function ModalForm({
         </DialogContent>
         <DialogActions>
           <Button autoFocus type="submit" color="primary" disabled={loading}>
-            Save changes
+            {buttonLabel}
           </Button>
         </DialogActions>
       </form>

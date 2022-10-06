@@ -1,53 +1,62 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { object, string, number } from "yup";
 import PropTypes from "prop-types";
-import {
-  Grid,
-  Button,
-  TextField,
-  Select,
-  InputLabel,
-  MenuItem,
-} from "@material-ui/core";
-import { taskServices } from "../api";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Grid, Button, TextField } from "@material-ui/core";
 import Icon from "../components/Icon";
 import ModalForm from "../components/ModalForm";
-import { useNotification, useForm, useGlobal } from "../hooks";
+import { useNotification } from "../hooks";
 import useStyles from "../UITemplate";
 
-const INITIAL_STATE = {
-  stepId: "",
+const formSchema = object().shape({
+  stepNumber: number(),
+  action: string().required("Action is a required field."),
+  requiredData: string().required("Required Data is a required field."),
+  expectedResult: string().required("Expected Result is a required field."),
+});
+
+const defaultValues = {
+  stepNumber: 0,
   action: "",
   requiredData: "",
   expectedResult: "",
 };
-
-const AddStepModal = ({ setSteps }) => {
+const AddStepModal = ({ setSteps, steps }) => {
   const alert = useNotification();
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
 
-  const [step, setStep, handleInputChange, reset] = useForm(INITIAL_STATE);
-  const [glbState] = useGlobal();
-  const statuses = glbState.taskStatuses;
-  const history = useHistory();
+  const { register, handleSubmit, errors, reset, setValue } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(formSchema),
+    defaultValues,
+  });
+
+  const handleAddNewStep = () => {
+    setOpenModal(!openModal);
+
+    reset({
+      ...defaultValues,
+      stepNumber: steps.length + 1,
+    });
+  };
 
   const handleClose = () => {
     reset();
     setOpenModal(false);
   };
 
-  const handleSubmit = () => {
-    if (step.name.trim().length > 3) {
-      setSteps((items) => [{ ...step }, ...items]);
-      alert({
-        isOpen: true,
-        message: "Step has been added succesfully.",
-        severity: "success",
-      });
-      reset();
-      setOpenModal(false);
-    }
+  const onSubmit = (step) => {
+    const values = { ...step, stepNumber: steps.length + 1 };
+    setSteps((items) => [{ ...values }, ...items]);
+    alert({
+      isOpen: true,
+      message: "Step has been added succesfully.",
+      severity: "success",
+    });
+    reset();
+    setOpenModal(false);
   };
 
   return (
@@ -59,7 +68,7 @@ const AddStepModal = ({ setSteps }) => {
               size="large"
               variant="contained"
               color="primary"
-              onClick={() => setOpenModal(!openModal)}
+              onClick={() => handleAddNewStep()}
             >
               <Icon name={"Add"} />
               Add New Step
@@ -69,41 +78,55 @@ const AddStepModal = ({ setSteps }) => {
       </div>
       <ModalForm
         isOpen={openModal}
-        title={"Create New Task"}
+        title={"Add New Step"}
         handleClose={handleClose}
-        onSubmit={handleSubmit}
         loading={false}
+        buttonLabel={"Add Step"}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
-              name="name"
+              inputRef={register}
+              disabled={true}
+              name="stepNumber"
               variant="outlined"
               fullWidth
-              label="Task Name"
-              onChange={handleInputChange}
-              value={steps.name}
-              autoFocus
+              label="Step #"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              inputRef={register}
+              name="action"
+              variant="outlined"
+              fullWidth
+              label="Action"
+              error={!!errors.action}
+              helperText={errors?.action?.message}
             />
           </Grid>
           <Grid item xs={12}>
-            <InputLabel id="status-label-id">Status</InputLabel>
-            <Select
-              name="status"
-              fullWidth
+            <TextField
+              inputRef={register}
+              name="requiredData"
               variant="outlined"
-              labelId="status-label-id"
-              id="status-label-id"
-              onChange={handleInputChange}
-              value={steps.status}
-              label="Status"
-            >
-              {statuses.map((item) => (
-                <MenuItem key={item.value} value={item.value}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Select>
+              fullWidth
+              label="Required Data"
+              error={!!errors.requiredData}
+              helperText={errors?.requiredData?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              inputRef={register}
+              name="expectedResult"
+              variant="outlined"
+              fullWidth
+              label="Expected Result"
+              error={!!errors.expectedResult}
+              helperText={errors?.expectedResult?.message}
+            />
           </Grid>
         </Grid>
       </ModalForm>

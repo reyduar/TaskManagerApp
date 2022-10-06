@@ -82,7 +82,7 @@ const AddCard = ({ setTareas }) => {
               // onClick={() => setOpenModal(!openModal)}
             >
               <Icon name={"Add"} />
-              Create Test Case
+              Create New Task
             </Button>
           </Grid>
         </Grid>
