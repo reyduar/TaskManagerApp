@@ -2,6 +2,8 @@
 
 ## Example Project to [React Workshops](https://www.youtube.com/playlist?list=PLPvHukATGjeOpYti5TgY70Qbn8h7eDQZx)
 
+## Firebase Hosting [App URL](https://crud-react-firebase-8f4ee.web.app/login)
+
 ### Author
 
 Ariel Duarte
