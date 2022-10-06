@@ -53,9 +53,7 @@ const SearchBar = () => {
   return (
     <Container maxWidth="md" justify="center">
       <FormControl fullWidth className={classes.margin} variant="outlined">
-        <InputLabel htmlFor="search-tasks">
-          Search test case by id or title
-        </InputLabel>
+        <InputLabel htmlFor="search-tasks">Search tasks by name</InputLabel>
         <OutlinedInput
           id="search-tasks"
           value={values.searchTerm}
