@@ -1,4 +1,4 @@
-# ⚛ React 🔥 Firebase - CRUD Firestore
+# ⚛ Reactjs 🔥 Firebase - CRUD Firestore
 
 ### Example Project to [React Workshops](https://www.youtube.com/playlist?list=PLPvHukATGjeOpYti5TgY70Qbn8h7eDQZx)
 
